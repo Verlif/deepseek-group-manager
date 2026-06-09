@@ -905,41 +905,6 @@ class UIManager {
             }
         });
 
-        // 创建拖拽把手，挂在 gm-root 右边缘
-        const handle = document.createElement('div');
-        handle.className = 'gm-resize-handle';
-        this.root.appendChild(handle);
-
-        let startX = 0;
-        let startWidth = 0;
-
-        handle.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            startX = e.clientX;
-            startWidth = this.root.offsetWidth;
-            handle.classList.add('gm-resizing');
-            document.body.style.userSelect = 'none';
-            document.body.style.cursor = 'col-resize';
-
-            const onMove = (ev) => {
-                const delta = ev.clientX - startX;
-                const newWidth = Math.max(200, Math.min(500, startWidth + delta));
-                setWidth(newWidth);
-            };
-            const onUp = () => {
-                handle.classList.remove('gm-resizing');
-                document.body.style.userSelect = '';
-                document.body.style.cursor = '';
-                document.removeEventListener('mousemove', onMove);
-                document.removeEventListener('mouseup', onUp);
-                chrome.storage.local.set({ [storageKey]: this.root.offsetWidth });
-            };
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', onUp);
-        });
-
-        log('setupResizeHandle: 把手挂在 gm-root 右边缘，宽度覆盖祖先链');
     }
 
     /**
@@ -954,7 +919,11 @@ class UIManager {
      */
     hideOriginalContainer(hide) {
         if (this.originalContainer) {
-            this.originalContainer.style.display = hide ? 'none' : '';
+            this.originalContainer.style.display = hide ? 'none' : ''
+            this.originalContainer.style.height = '0 !important'
+            this.originalContainer.addEventListener('wheel', (e) => {
+                e.preventDefault();  // 阻止鼠标滚轮滚动页面/元素
+            }, { passive: false });
         }
     }
 
@@ -1228,6 +1197,9 @@ class UIManager {
             this.renderEmptyState();
         }
 
+        // 高亮当前的会话
+        this.updateActiveHighlight();
+
         log(`渲染完成: ${this.groups.length} 个分组, ` +
             `${allItems.length} 个对话, ${ungroupedItems.length} 个未分组`);
     }
@@ -1367,7 +1339,7 @@ class UIManager {
                 return meta && meta.lastAccessedAt;
             })
             .sort((a, b) => (this.meta[b.id].lastAccessedAt || 0) - (this.meta[a.id].lastAccessedAt || 0))
-            .slice(0, 50)
+            .slice(0, 5)
             .filter(filterItem);
 
         if (recentItems.length === 0) return;
@@ -1513,12 +1485,12 @@ class UIManager {
         if (meta && meta.addedAt) {
             const d = new Date(meta.addedAt);
             const pad = (n) => String(n).padStart(2, '0');
-            titleSpan.title = '收录于 ' +
+            titleSpan.title = `【${item.title}】` + '收录于 ' +
                 `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ` +
                 `${pad(d.getHours())}:${pad(d.getMinutes())}`;
         }
         // 点击标题 → 在原始 DOM 中找到对应元素并触发点击
-        titleSpan.addEventListener('click', (e) => {
+        wrapper.addEventListener('click', (e) => {
             if (this.batchMode) {
                 // 批量模式：切换选择
                 e.stopPropagation();
@@ -1634,6 +1606,11 @@ class UIManager {
             const activeEl = this.customItemMap.get(this.activeConversationId);
             if (activeEl) {
                 activeEl.classList.add('gm-active');
+            } else {
+                const div = document.querySelector(`div[data-conversation-id="${this.activeConversationId}"]`)
+                if (div) {
+                    div.classList.add('gm-active')
+                }
             }
         }
     }

@@ -58,7 +58,7 @@
 
     /* 字体 */
     --gm-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --gm-font-size: 12px;
+    --gm-font-size: 14px;
     --gm-font-size-sm: 10px;
     --gm-font-size-lg: 13px;
 }
@@ -94,6 +94,10 @@
     flex-direction: column;
     overflow: hidden;
     user-select: none;
+    /* 留白 */
+    margin-top: 10px;
+    /* 适配左边栏padding */
+    left: -13px;
 }
 
 /* ============================================================
@@ -314,9 +318,9 @@
     display: flex;
     align-items: center;
     height: var(--gm-item-height);
-    padding: 0 6px;
+    border-radius: 12px;
+    padding: 6px 12px;
     margin: 0 4px 0 16px;  /* 左边缩进表示层级 */
-    border-radius: 3px;
     cursor: pointer;
     transition: background var(--gm-transition);
     position: relative;
