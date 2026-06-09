@@ -86,7 +86,6 @@
     font-family: var(--gm-font);
     font-size: var(--gm-font-size);
     color: var(--gm-text-primary);
-    background: var(--gm-bg-primary);
     /* 关键：在父容器中填充可用空间 */
     flex: 1 1 auto;
     min-height: 0;
@@ -95,9 +94,12 @@
     overflow: hidden;
     user-select: none;
     /* 留白 */
-    margin-top: 10px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    background-color: unset;
     /* 适配左边栏padding */
     left: -13px;
+    border-radius: 16px;
 }
 
 /* ============================================================
@@ -106,11 +108,11 @@
 .gm-toolbar {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 5px 8px;
-    border-bottom: 1px solid var(--gm-border);
-    background: var(--gm-bg-secondary);
     flex-shrink: 0;
+    border-bottom: unset;
+    padding: 10px 24px;
+    background: unset;
+    gap: 16px;
 }
 
 /* 搜索输入框 */
@@ -120,11 +122,11 @@
     height: 26px;
     padding: 2px 8px;
     border: 1px solid var(--gm-border);
-    border-radius: var(--gm-radius-sm);
     background: var(--gm-bg-input);
     color: var(--gm-text-primary);
     font-size: var(--gm-font-size);
     font-family: var(--gm-font);
+    border-radius: 16px;
     outline: none;
     transition: border-color var(--gm-transition);
 }
@@ -142,9 +144,7 @@
     justify-content: center;
     gap: 4px;
     height: 26px;
-    padding: 0 8px;
     border: none;
-    border-radius: var(--gm-radius-sm);
     background: var(--gm-accent);
     color: #fff;
     font-size: var(--gm-font-size);
@@ -153,6 +153,8 @@
     white-space: nowrap;
     transition: background var(--gm-transition), opacity var(--gm-transition);
     flex-shrink: 0;
+    padding: 16px;
+    border-radius: 16px;
 }
 .gm-btn:hover {
     background: var(--gm-accent-hover);
