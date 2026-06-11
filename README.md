@@ -67,7 +67,7 @@
 1. 打开 Chrome 浏览器，进入 `chrome://extensions`
 2. 开启右上角的 **"开发者模式"** 开关
 3. 点击 **"加载已解压的扩展程序"**
-4. 选择 `group-manager-extension/` 文件夹
+4. 选择 `deepseek-group-manager/` 文件夹
 5. 打开 [chat.deepseek.com](https://chat.deepseek.com)，左侧应出现分组管理界面
 
 ---
