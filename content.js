@@ -869,9 +869,6 @@ class UIManager {
     setupResizeHandle() {
         const storageKey = 'gm_sidebar_width';
 
-        // gm-root 作为把手定位的锚点
-        this.root.style.position = 'relative';
-
         // 核心：从 gm-root 向上，覆盖所有可能是侧边栏容器的元素
         const setWidth = (w) => {
             const px = w + 'px';

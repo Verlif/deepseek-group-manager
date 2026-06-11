@@ -110,7 +110,7 @@
     align-items: center;
     flex-shrink: 0;
     border-bottom: unset;
-    padding: 10px 24px;
+    padding: 10px 8px;
     background: unset;
     gap: 16px;
 }
@@ -120,7 +120,7 @@
     flex: 1;
     min-width: 0;
     height: 26px;
-    padding: 2px 8px;
+    padding: 2px 8px 2px 14px;
     border: 1px solid var(--gm-border);
     background: var(--gm-bg-input);
     color: var(--gm-text-primary);
